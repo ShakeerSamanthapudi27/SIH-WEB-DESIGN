@@ -10,7 +10,7 @@ const Navbar = () => {
           <img className="navbar-logo" src={logo} alt='Logo' />
           <h1 className='nav-head'>BhooJal <span className='spannav'>C</span>hatbot</h1>
         </div>
-
+        <h1>Jal Shakti</h1>
         <ul className="navbar-links">
           <li><a href="#home">Home</a></li>
           <li><a href="#dummy">Reports</a></li>
