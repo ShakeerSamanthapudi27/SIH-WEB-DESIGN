@@ -3,16 +3,7 @@ import PromptContainer from './prompt';
 const Homepage = () => {
   return (
     <div className="homepage">
-    <div className="popular-destinations-section">
-        <h1 className='chead'>Chatbot Services</h1>
-        <div className="destinations-grid">
-          <div className="destination-card">GW Information</div>
-          <div className="destination-card">Reports</div>
-          <div className="destination-card">NOC</div>
-          <div className="destination-card">Level at Specific Longitude and Latitude</div>
-        </div>
-      </div>
-      <div className="statistics">
+    <div className="statistics">
         <div className="stat-item">
           <h2>2,19,32,799</h2>
           <p>Groundwater Wells</p>
@@ -24,6 +15,15 @@ const Homepage = () => {
         <div className="stat-item">
           <h2>95%</h2>
           <p>Depleted from 2002 to 2022</p>
+        </div>
+      </div>
+    <div className="popular-destinations-section">
+        <h1 className='chead'>Chatbot Services</h1>
+        <div className="destinations-grid">
+          <div className="destination-card">GW Information</div>
+          <div className="destination-card">Reports</div>
+          <div className="destination-card">NOC</div>
+          <div className="destination-card">Level at Specific Longitude and Latitude</div>
         </div>
       </div>
       {/* Top Section */}
