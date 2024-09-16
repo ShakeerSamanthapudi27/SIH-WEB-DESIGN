@@ -10,6 +10,7 @@ function App() {
       <Navbar />
       <GwDisplay/>
       <PromptContainer/>
+      <Homepage/>
     </div>
   );
 }
