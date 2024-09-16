@@ -1,12 +1,78 @@
 import React from 'react';
-import PromptContainer from './prompt';
+import { useState } from 'react';
+import axios from 'axios';
+import runChat from './gemini';
 const Homepage = () => {
+  async function sendPrompt(region, userInput) {
+    console.log(region)
+    if(region == '' || String(userInput).trim() == '') {
+      window.alert("Please enter a valid region or prompt");
+      return ;
+    }
+    console.log(userInput, region);
+    let data = '';
+    try {
+      const response = await axios.post('http://127.0.0.1:5000/getresponse', JSON.stringify({district: region}), {
+        headers: {
+          Accept: 'application/form-data',
+          'Content-Type': 'application/json'
+        }
+      });
+      console.log(response.data);
+      data = response.data;
+    }
+    catch(e) {
+      setMessage("Error getting Response!");
+    }
+    const response = await runChat(`prompt: ${userInput}\n data: ${data}`);
+    console.log(response);
+    setMessage(response);
+    setUserMessage('');
+  }
+  const [selectedRegion, setSelectedRegion] = useState("");
+  const [message, setMessage] = useState("");
+  const [userMessage, setUserMessage] = useState('');
+
+  // Step 2: Handle change
+  const handleRegionChange = (event) => {
+    setSelectedRegion(event.target.value); // Update the selected region
+  };
+
+  const regions = [
+    { label: "Alluri Sitharama Raju", value: "alluri sitharama raju" },
+    { label: "Anakapalli", value: "anakapalli" },
+    { label: "Ananthapuramu", value: "ananthapuramu" },
+    { label: "Annamayya", value: "annamayya" },
+    { label: "Bapatla", value: "bapatla" },
+    { label: "Chittoor", value: "chittoor" },
+    { label: "East Godavari", value: "east godavari" },
+    { label: "Eluru", value: "eluru" },
+    { label: "Guntur", value: "guntur" },
+    { label: "Kakinada", value: "kakinada" },
+    { label: "Konaseema", value: "konaseema" },
+    { label: "Krishna", value: "krishna" },
+    { label: "Kurnool", value: "kurnool" },
+    { label: "Nandyal", value: "nandyal" },
+    { label: "NTR", value: "ntr" },
+    { label: "Palnadu", value: "palnadu" },
+    { label: "Parvathipuram Manyam", value: "parvathipuram manyam" },
+    { label: "Prakasam", value: "prakasam" },
+    { label: "Sri Potti Sriramulu Nellore", value: "sri potti sriramulu nellore" },
+    { label: "Sri Sathya Sai", value: "sri sathya sai" },
+    { label: "Srikakulam", value: "srikakulam" },
+    { label: "Tirupati", value: "tirupati" },
+    { label: "Visakhapatnam", value: "visakhapatnam" },
+    { label: "Vizianagaram", value: "vizianagaram" },
+    { label: "West Godavari", value: "west godavari" },
+    { label: "Y.S.R Kadapa", value: "ysr kadapa" }
+  ];
+
   return (
     <div className="homepage">
     <div className="statistics">
         <div className="stat-item">
           <h2>2,19,32,799</h2>
-          <p>Groundwater Wells</p>
+          <p>Groundwater Wells in India</p>
         </div>
         <div className="stat-item">
           <h2>4%</h2>
@@ -30,42 +96,34 @@ const Homepage = () => {
       <div className="top-section">
         <div className="overlay">
           <h1 className="title">Groundwater Information of Specific Region </h1>
-          <PromptContainer/>
+          <div className="prompt-container">
+            <input type="text" className="prompt-bar" value={userMessage} onChange={(e) => setUserMessage(e.target.value)} placeholder="Type your prompt here..." />
+            {/* <button className="submit-btn" >Enter</button> */}
+          </div>
           <div className="search-bar">
-            <select className="region-select">
-              <option value="" disabled selected>Select Region</option>
-              <option value="alluri_sitharama_raju">Alluri Sitharama Raju</option>
-    <option value="anakapalli">Anakapalli</option>
-    <option value="ananthapuramu">Ananthapuramu</option>
-    <option value="annamayya">Annamayya</option>
-    <option value="bapatla">Bapatla</option>
-    <option value="chittoor">Chittoor</option>
-    <option value="east_godavari">East Godavari</option>
-    <option value="eluru">Eluru</option>
-    <option value="guntur">Guntur</option>
-    <option value="kakinada">Kakinada</option>
-    <option value="konaseema">Konaseema</option>
-    <option value="krishna">Krishna</option>
-    <option value="kurnool">Kurnool</option>
-    <option value="nandyal">Nandyal</option>
-    <option value="ntr">NTR</option>
-    <option value="palnadu">Palnadu</option>
-    <option value="parvathipuram_manyam">Parvathipuram Manyam</option>
-    <option value="prakasam">Prakasam</option>
-    <option value="sri_potti_sriramulu_nellore">Sri Potti Sriramulu Nellore</option>
-    <option value="sri_sathya_sai">Sri Sathya Sai</option>
-    <option value="srikakulam">Srikakulam</option>
-    <option value="tirupati">Tirupati</option>
-    <option value="visakhapatnam">Visakhapatnam</option>
-    <option value="vizianagaram">Vizianagaram</option>
-    <option value="west_godavari">West Godavari</option>
-    <option value="ysr_kadapa">Y.S.R Kadapa</option>
-            </select>
-            <button className="search-btn">Get</button>
+            
+          <select
+            className="region-select"
+            value={selectedRegion}
+            onChange={handleRegionChange}
+          >
+            <option value="" disabled>Select Region</option>
+            {regions.map((region) => (
+              <option key={region.value} value={region.value}>
+                {region.label}
+              </option>
+            ))}
+          </select>
+            <button className="search-btn" onClick={() => sendPrompt(selectedRegion, userMessage)}>Get</button>
           </div>
           <p className="other-regions">
             Most searched regions: NTR, Guntur, Srikakulam
           </p>
+          {message != ''? <div className='chatoutput'>
+            <p>
+              {message}
+            </p>
+          </div>: null}
         </div>
       </div>
 
