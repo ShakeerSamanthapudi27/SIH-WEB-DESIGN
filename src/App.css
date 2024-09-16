@@ -122,3 +122,102 @@ html {
 {
   color: #cadcec;
 }
+//* General Styles */
+.homepage {
+  font-family: Arial, sans-serif;
+}
+
+/* Top Section */
+.top-section {
+  background-image: url('scuba-diving-background.jpg'); /* Add your background image URL */
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  height: 60vh;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.5); /* Add a dark overlay */
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+}
+
+.title {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.country-select,
+.date-input,
+.search-btn {
+  padding: 10px;
+  font-size: 1em;
+}
+
+.search-btn {
+  background-color: #ff4040;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.popular-destinations {
+  margin-top: 10px;
+}
+
+/* Statistics Section */
+.statistics {
+  display: flex;
+  justify-content: space-around;
+  padding: 40px 20px;
+  background-color: #f0f0f0;
+  text-align: center;
+}
+
+.stat-item {
+  flex: 1;
+}
+
+.stat-item h2 {
+  font-size: 2em;
+  color: #007acc;
+}
+
+/* Popular Destinations Section */
+.popular-destinations-section {
+  padding: 20px;
+  text-align: center;
+}
+
+.destinations-grid {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.destination-card {
+  background-color: #007acc;
+  color: white;
+  padding: 20px;
+  width: 200px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.destination-card:hover {
+  background-color: #005f99;
+}
